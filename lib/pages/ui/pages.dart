@@ -56,7 +56,6 @@ part 'menu_page.dart';
 part 'main_page.dart';
 part 'edit_profile.dart';
 part 'detail_page.dart';
-part 'guidetour_page.dart';
 part 'success_page.dart';
 part 'ticket_page.dart';
 part 'webview_page.dart';

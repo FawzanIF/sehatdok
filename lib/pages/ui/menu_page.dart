@@ -48,7 +48,7 @@ class _MenuPageState extends State<MenuPage> {
       "spesialis": "Spesialis Bedah Saraf",
       "imageUrl": 'assets/image_doctor5.jpg',
       "rating": 4.5.toDouble(),
-      "price": 80000,
+      "price": 380000,
     },
     {
       "id": 6,
@@ -152,7 +152,7 @@ class _MenuPageState extends State<MenuPage> {
                         height: 6,
                       ),
                       Text(
-                        'Membasmi penyakit bersama Ahlinya!',
+                        'Tetap Sehat bersama Ahlinya!',
                         style: greyTextStyle.copyWith(
                           fontWeight: light,
                         ),
@@ -170,8 +170,7 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.bloc<PageBloc>().add(GoToEditProfilePage(
-                              (userState as UserLoaded).user));
+                          context.bloc<PageBloc>().add(GoToEditProfilePage(userState.user));
                         },
                         child: Container(
                           width: 70,
@@ -255,109 +254,7 @@ class _MenuPageState extends State<MenuPage> {
             children: [
               SizedBox(
                 width: defaultMargin,
-              ), //   Container(
-              //     padding: EdgeInsets.symmetric(
-              //       horizontal: 12,
-              //       vertical: 10,
-              //     ),
-              //     margin: EdgeInsets.only(right: 16),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       color: kBlueColor,
-              //     ),
-              //     child: Text(
-              //       'All Doctor',
-              //       style: whiteTextStyle.copyWith(
-              //         fontSize: 13,
-              //         fontWeight: medium,
-              //       ),
-              //     ),
-              //   ),
-              //   Container(
-              //     padding: EdgeInsets.symmetric(
-              //       horizontal: 12,
-              //       vertical: 10,
-              //     ),
-              //     margin: EdgeInsets.only(right: 16),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       border: Border.all(
-              //         color: kGreyColor,
-              //       ),
-              //       color: transparentColor,
-              //     ),
-              //     child: Text(
-              //       'THT',
-              //       style: greyTextStyle.copyWith(
-              //         fontSize: 13,
-              //         fontWeight: medium,
-              //       ),
-              //     ),
-              //   ),
-              //   Container(
-              //     padding: EdgeInsets.symmetric(
-              //       horizontal: 12,
-              //       vertical: 10,
-              //     ),
-              //     margin: EdgeInsets.only(right: 16),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       border: Border.all(
-              //         color: kGreyColor,
-              //       ),
-              //       color: transparentColor,
-              //     ),
-              //     child: Text(
-              //       'Kulit Kelamin',
-              //       style: greyTextStyle.copyWith(
-              //         fontSize: 13,
-              //         fontWeight: medium,
-              //       ),
-              //     ),
-              //   ),
-              //   Container(
-              //     padding: EdgeInsets.symmetric(
-              //       horizontal: 12,
-              //       vertical: 10,
-              //     ),
-              //     margin: EdgeInsets.only(right: 16),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       border: Border.all(
-              //         color: kGreyColor,
-              //       ),
-              //       color: transparentColor,
-              //     ),
-              //     child: Text(
-              //       'Penyakit Dalam',
-              //       style: greyTextStyle.copyWith(
-              //         fontSize: 13,
-              //         fontWeight: medium,
-              //       ),
-              //     ),
-              //   ),
-              //   Container(
-              //     padding: EdgeInsets.symmetric(
-              //       horizontal: 12,
-              //       vertical: 10,
-              //     ),
-              //     margin: EdgeInsets.only(right: 16),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       border: Border.all(
-              //         color: kGreyColor,
-              //       ),
-              //       color: transparentColor,
-              //     ),
-              //     child: Text(
-              //       'Gigi',
-              //       style: greyTextStyle.copyWith(
-              //         fontSize: 13,
-              //         fontWeight: medium,
-              //       ),
-              //     ),
-              //   ),
-              // ],
+              ),
               categories(0, 'All Doctor'),
               categories(1, 'Umum'),
               categories(2, 'THT'),
@@ -406,7 +303,7 @@ class _MenuPageState extends State<MenuPage> {
                 width: 16,
               ),
               Text(
-                'Temukan Dokter yang anda kenal',
+                'Temukan Dokter Andalanmu!',
                 style: greyTextStyle,
               ),
             ],
@@ -504,113 +401,132 @@ class _MenuPageState extends State<MenuPage> {
     }
 
     Widget Doctor() {
-      return Container(
-        child: _foundUsers.isNotEmpty
-            ? ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _foundUsers.length,
-                padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailPage(
-                              imageUrl: _foundUsers[index]['imageUrl'],
-                              name: _foundUsers[index]['name'],
-                              rating: _foundUsers[index]["rating"],
-                              price: _foundUsers[index]['price'],
-                              spesialis: _foundUsers[index]['spesialis'],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(top: 14),
-                        decoration: BoxDecoration(
-                          color: kWhiteColor,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 70,
-                              height: 70,
-                              margin: EdgeInsets.only(right: 16),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    _foundUsers[index]['imageUrl'],
-                                  ),
+      return Container(child: BlocBuilder<UserBloc, UserState>(
+        builder: (_, userState) {
+          if (userState is UserLoaded) {
+            if (imageFileToUpload != null) {
+              uploadImage(imageFileToUpload).then((downloadURL) {
+                imageFileToUpload = null;
+                context
+                    .bloc<UserBloc>()
+                    .add(UpdateData(profileImage: downloadURL));
+              });
+            }
+            return _foundUsers.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _foundUsers.length,
+                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                    itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                  userId: userState.user.id,
+                                  imageUrl: _foundUsers[index]['imageUrl'],
+                                  name: _foundUsers[index]['name'],
+                                  rating: _foundUsers[index]["rating"],
+                                  price: _foundUsers[index]['price'],
+                                  spesialis: _foundUsers[index]['spesialis'],
                                 ),
                               ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(top: 14),
+                            decoration: BoxDecoration(
+                              color: kWhiteColor,
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _foundUsers[index]['name'],
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 18,
-                                      fontWeight: medium,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    _foundUsers[index]['spesialis'],
-                                    style: greyTextStyle.copyWith(
-                                      fontWeight: light,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
                               children: [
                                 Container(
-                                  height: 20,
-                                  width: 20,
-                                  margin: EdgeInsets.only(
-                                    right: 2,
-                                  ),
+                                  width: 70,
+                                  height: 70,
+                                  margin: EdgeInsets.only(right: 16),
                                   decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18),
                                     image: DecorationImage(
+                                      fit: BoxFit.cover,
                                       image: AssetImage(
-                                        'assets/icon_star.png',
+                                        _foundUsers[index]['imageUrl'],
                                       ),
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  _foundUsers[index]['rating'].toString(),
-                                  style: blackTextStyle.copyWith(
-                                    fontWeight: medium,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _foundUsers[index]['name'],
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 18,
+                                          fontWeight: medium,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        _foundUsers[index]['spesialis'],
+                                        style: greyTextStyle.copyWith(
+                                          fontWeight: light,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      margin: EdgeInsets.only(
+                                        right: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'assets/icon_star.png',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      _foundUsers[index]['rating'].toString(),
+                                      style: blackTextStyle.copyWith(
+                                        fontWeight: medium,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ))
+                : Center(
+                    child: Text(
+                      'Data tidak Ditemukan',
+                      style: greyTextStyle.copyWith(
+                        fontSize: 18,
                       ),
-                    ))
-            : Center(
-                child: Text(
-                  'No results found',
-                  style: greyTextStyle.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-      );
+                    ),
+                  );
+          }else {
+            return SpinKitFadingCircle(
+              color: kBlueColor,
+              size: 50,
+            );
+          }
+        },
+      ));
     }
 
     return WillPopScope(

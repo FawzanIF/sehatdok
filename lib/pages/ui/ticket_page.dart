@@ -66,19 +66,27 @@ class _TicketPageState extends State<TicketPage> {
               height: 8,
             ),
             Expanded(
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                removeBottom: true,
-                child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection("dataTiket")
-                        .snapshots(),
+              child: BlocBuilder<UserBloc, UserState>(
+                builder: (_, userState) {
+                  if (userState is UserLoaded) {
+                    return StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("dataTiket")
+                            .where('user_id', isEqualTo: userState.user.id)
+                            .snapshots(),
                     builder: (_, snapshot) {
                       if (!snapshot.hasData)
                         return SpinKitCircle(color: kBlueColor, size: 100);
                       return TicketList(ticketInfo: snapshot.data.docs);
-                    }),
+                    }
+                      );
+                  } else {
+                    return SpinKitFadingCircle(
+                      color: kBlueColor,
+                      size: 50,
+                    );
+                  }
+                },
               ),
             )
           ],
@@ -133,7 +141,7 @@ class TicketList extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            "Pesanan Anda",
+                            "Bukti Pesanan",
                             style: blackTextStyle.copyWith(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
@@ -199,20 +207,23 @@ class TicketList extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Metode Pembayaran :",
-                                      style: blackTextStyle.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
+                                  Expanded(
+                                    child: Text("Metode Pembayaran :",
+                                        style: blackTextStyle.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14)),
+                                  ),
                                   Text(
-                                      ticketInfo[index]
-                                          .data()["Payment"]
-                                          .toString(),
-                                      style: greyTextStyle.copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 14))
+                                    ticketInfo[index]
+                                        .data()["Payment"]
+                                        .toString(),
+                                    style: greyTextStyle.copyWith(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 14),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
                                 ],
                               ),
-                              
                               SizedBox(
                                 height: 10,
                               ),
@@ -226,7 +237,7 @@ class TicketList extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                  r"$ " +
+                                  r"Rp. " +
                                       ticketInfo[index]
                                           .data()["Price"]
                                           .toString(),

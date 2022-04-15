@@ -71,18 +71,27 @@ class _BMIPageState extends State<BMIPage> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "Berat Badan (Kg)",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                ),
-                Text(
-                  "Tinggi Badan (cm)",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                )
-              ],
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Berat Badan (Kg)",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  Text(
+                    "Tinggi Badan (cm)",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: semiBold,
+                    ),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
@@ -95,8 +104,10 @@ class _BMIPageState extends State<BMIPage> {
                 ),
                 new Flexible(
                   child: new TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(),
+                      hintStyle: blackTextStyle,
+                      labelStyle: blackTextStyle,
                     ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -108,8 +119,10 @@ class _BMIPageState extends State<BMIPage> {
                 ),
                 new Flexible(
                   child: new TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(),
+                      hintStyle: blackTextStyle,
+                      labelStyle: blackTextStyle,
                     ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -129,13 +142,17 @@ class _BMIPageState extends State<BMIPage> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                ),
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  ),
                   onPressed: () {
                     hitungBMI();
                     kategoriBMI();
                   },
-                  child: const Text('Hitung', style: TextStyle(fontSize: 18),),
+                  child: Text(
+                    'Hitung',
+                    style: whiteTextStyle.copyWith(
+                        fontSize: 16, fontWeight: semiBold),
+                  ),
                 ),
               ],
             ),
@@ -150,16 +167,16 @@ class _BMIPageState extends State<BMIPage> {
                   children: [
                     Text(
                       "Total BMI",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                      style: blackTextStyle.copyWith(
+                          fontSize: 18, fontWeight: semiBold),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
                       res.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
+                      style: blackTextStyle.copyWith(
+                          fontSize: 18, fontWeight: semiBold),
                     ),
                   ],
                 ),
@@ -167,20 +184,16 @@ class _BMIPageState extends State<BMIPage> {
                   children: [
                     Text(
                       "Kategori",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                      ),
+                      style: blackTextStyle.copyWith(
+                          fontSize: 18, fontWeight: semiBold),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
                       kategori,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 25,
-                          color: color),
+                      style: blackTextStyle.copyWith(
+                          fontSize: 18, fontWeight: semiBold, color: color),
                     ),
                   ],
                 ),
@@ -195,7 +208,11 @@ class _BMIPageState extends State<BMIPage> {
             ),
             Center(
               child: ElevatedButton(
-                child: Text('Tips Kesehatan', style: TextStyle(fontSize: 20),),
+                child: Text(
+                  'Tips Kesehatan',
+                  style: whiteTextStyle.copyWith(
+                      fontSize: 18, fontWeight: semiBold),
+                ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.green,
                   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 20),

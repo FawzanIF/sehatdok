@@ -42,60 +42,54 @@ class _BeritaKesState extends State<BeritaKes> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: defaultMargin),
               child: SingleChildScrollView(
-                child: Stack(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Berita Kesehatan',
-                          style: blackTextStyle.copyWith(
-                            fontWeight: medium,
-                            fontSize: 24,
-                          ),
-                        ),
-                        Text(
-                          'Info Seputar Dunia Kesehatan Untukmu',
-                          style: greyTextStyle.copyWith(
-                            fontWeight: light,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Divider(
-                          color: kBlackColor,
-                          height: 20,
-                          thickness: 1,
-                          endIndent: 20,
-                        ),
-                        SizedBox(
-                          height: 24,
-                        ),
-                        MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          removeBottom: true,
-                          child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection("beritaKesehatan")
-                                  .snapshots(),
-                              builder: (_, snapshot) {
-                                if (!snapshot.hasData)
-                                  return SpinKitCircle(
-                                      color: kBlueColor, size: 100);
-                                return NewsList(newsInfo: snapshot.data.docs);
-                              }),
-                        ),
-                      ],
+                    Text(
+                      'Berita Kesehatan',
+                      style: blackTextStyle.copyWith(
+                        fontWeight: medium,
+                        fontSize: 24,
+                      ),
+                    ),
+                    Text(
+                      'Info Seputar Dunia Kesehatan Untukmu',
+                      style: greyTextStyle.copyWith(
+                        fontWeight: light,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Divider(
+                      color: kBlackColor,
+                      height: 20,
+                      thickness: 1,
+                      endIndent: 20,
+                    ),
+                    SizedBox(
+                      height: 24,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height/1.3,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.transparent,
+                      child: MediaQuery.removePadding(
+                        context: context,
+                        child: StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("beritaKesehatan")
+                                .snapshots(),
+                            builder: (_, snapshot) {
+                              if (!snapshot.hasData)
+                                return SpinKitCircle(
+                                    color: kBlueColor, size: 100);
+                              return NewsList(newsInfo: snapshot.data.docs);
+                            }),
+                      ),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -140,15 +134,14 @@ class NewsList extends StatelessWidget {
                       ListTile(
                         title: Text(
                           newsInfo[index].data()["judul"].toString(),
-                          style: greyTextStyle.copyWith(
+                          style: blackTextStyle.copyWith(
                               fontWeight: FontWeight.w600, fontSize: 18),
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
                           "Tentang : " +
                               newsInfo[index].data()["tentang"].toString(),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                          style: greyTextStyle.copyWith(fontSize: 12),
                         ),
                       ),
                       Row(
@@ -160,9 +153,7 @@ class NewsList extends StatelessWidget {
                           Flexible(
                             child: Text(
                               newsInfo[index].data()["deskripsi"].toString(),
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.6),
-                              ),
+                              style: greyTextStyle,
                               textAlign: TextAlign.justify,
                             ),
                           ),

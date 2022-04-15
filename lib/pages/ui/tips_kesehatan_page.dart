@@ -87,10 +87,6 @@ class HealthList extends StatelessWidget {
     this.healthInfo,
   }) : super(key: key);
 
-  void customLaunch(command) async {
-    await launch(command);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -105,7 +101,7 @@ class HealthList extends StatelessWidget {
             leading: CircleAvatar(
                 child: Image.network(
                     healthInfo[index].data()["gambar"].toString())),
-            title: Text(healthInfo[index].data()["judul"].toString()),
+            title: Text(healthInfo[index].data()["judul"].toString(), style: blackTextStyle,),
             children: <Widget>[
               Divider(
                 thickness: 1.0,
@@ -120,10 +116,9 @@ class HealthList extends StatelessWidget {
                   ),
                   child: Text(
                     healthInfo[index].data()["deskripsi"].toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 16),
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                    )
                   ),
                 ),
               ),

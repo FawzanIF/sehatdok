@@ -39,6 +39,8 @@ class Wrapper extends StatelessWidget {
                                         ? SearchPage()
                                         : (pageState is OnEditProfilePage)
                                             ? EditProfilePage(pageState.user)
-                                            : MainPage());
+                                            : (pageState is OnTicketPage)
+                                            ? TicketPage()
+                                              : MainPage());
   }
 }

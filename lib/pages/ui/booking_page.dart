@@ -20,20 +20,6 @@ class _BookingPageState extends State<BookingPage> {
   DateTime _dateTime;
   String payment = 'Ketuk untuk \nMemilih';
 
-  void _simpanTiket() {
-    FirebaseFirestore.instance.runTransaction((transaction) async {
-      CollectionReference reference =
-          FirebaseFirestore.instance.collection("dataTiket");
-      await reference.add({
-        "Place": widget.detailPage.name,
-        "Date": time,
-        "Price": "${widget.detailPage.price}",
-        "Traveler": jml,
-        "Payment": payment
-      });
-    });
-  }
-
   void _add() {
     setState(() {
       jml += 1;
@@ -58,7 +44,7 @@ class _BookingPageState extends State<BookingPage> {
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text(
-          "Book Ticket",
+          "Pesan Layanan Dokter",
           style: whiteTextStyle,
         ),
         backgroundColor: kBlueColor,
@@ -80,7 +66,7 @@ class _BookingPageState extends State<BookingPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Your Balance",
+                        "Kamu Punya :",
                         style: blackTextStyle.copyWith(
                           fontSize: 16,
                           fontWeight: semiBold,
@@ -147,7 +133,7 @@ class _BookingPageState extends State<BookingPage> {
                                 children: <Widget>[
                                   SizedBox(
                                     child: Text(
-                                      r'$ ' + userState.user.balance.toString(),
+                                      r'Rp. ' + userState.user.balance.toString(),
                                       style: blackTextStyle.copyWith(
                                         fontSize: 18,
                                         fontWeight: medium,
@@ -159,7 +145,7 @@ class _BookingPageState extends State<BookingPage> {
                                     height: 2,
                                   ),
                                   Text(
-                                    "Saldo Kamu",
+                                    "Tersisa",
                                     style: greyTextStyle.copyWith(
                                       fontWeight: light,
                                     ),
@@ -465,7 +451,20 @@ class _BookingPageState extends State<BookingPage> {
                                     builder: (context) => SuccessPage(),
                                   ),
                                 );
-                                _simpanTiket();
+                                FirebaseFirestore.instance
+                                    .runTransaction((transaction) async {
+                                  CollectionReference reference =
+                                      FirebaseFirestore.instance
+                                          .collection("dataTiket");
+                                  await reference.add({
+                                    "user_id": userState.user.id,
+                                    "Place": widget.detailPage.name,
+                                    "Date": time,
+                                    "Price": "${widget.detailPage.price}",
+                                    "Traveler": jml,
+                                    "Payment": payment
+                                  });
+                                });
                               },
                               width: 180,
                             ),
@@ -508,7 +507,20 @@ class _BookingPageState extends State<BookingPage> {
                                     builder: (context) => SuccessPage(),
                                   ),
                                 );
-                                _simpanTiket();
+                                FirebaseFirestore.instance
+                                    .runTransaction((transaction) async {
+                                  CollectionReference reference =
+                                      FirebaseFirestore.instance
+                                          .collection("dataTiket");
+                                  await reference.add({
+                                    "user_id": userState.user.id,
+                                    "Place": widget.detailPage.name,
+                                    "Date": time,
+                                    "Price": "${widget.detailPage.price}",
+                                    "Traveler": jml,
+                                    "Payment": payment
+                                  });
+                                });
                               },
                               width: 180,
                             ),
@@ -527,6 +539,15 @@ class _BookingPageState extends State<BookingPage> {
                           ),
                           desc: "Periksa Tanggal atau Saldo Anda!",
                           buttons: [
+                            DialogButton(
+                              child: Text(
+                                "Kembali",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              color: kRedColor,
+                            ),
                             DialogButton(
                               child: Text(
                                 "Isi Ulang",

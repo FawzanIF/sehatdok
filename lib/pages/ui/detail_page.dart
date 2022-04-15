@@ -8,29 +8,29 @@ class DetailPage extends StatefulWidget {
   final String address;
   final String gmaps;
   final String spesialis;
+  final String userId;
 
-  DetailPage({
-    this.imageUrl,
-    this.name,
-    this.rating,
-    this.address,
-    this.price,
-    this.gmaps,
-    this.spesialis,
-  });
-  
+  DetailPage(
+      {this.imageUrl,
+      this.name,
+      this.rating,
+      this.address,
+      this.price,
+      this.gmaps,
+      this.spesialis,
+      this.userId});
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-
   void customLaunch(command) async {
-      await launch(command); 
+    await launch(command);
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: SafeArea(
@@ -227,10 +227,10 @@ class _DetailPageState extends State<DetailPage> {
                                   PopularSpot(
                                     imageUrl: 'assets/image_doctor6.jpeg',
                                   ),
-                                   PopularSpot(
+                                  PopularSpot(
                                     imageUrl: 'assets/image_doctor7.png',
                                   ),
-                                   PopularSpot(
+                                  PopularSpot(
                                     imageUrl: 'assets/image_doctor8.png',
                                   ),
                                 ],
@@ -251,57 +251,50 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(defaultMargin),
                         child: Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GuideTourPage(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 54,
-                                height: 54,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/button_chat.png'))),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
                             Expanded(
                               child: Container(
                                 height: 54,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BookingPage(detailPage: DetailPage(
-                                          imageUrl: widget.imageUrl,
-                                          name: widget.name,
-                                          spesialis: widget.spesialis,
-                                          price: widget.price,
-                                          rating: widget.rating,)),
-                                      ),
-                                    );
+                                child: BlocBuilder<UserBloc, UserState>(
+                                  builder: (_, userState) {
+                                    if (userState is UserLoaded) {
+                                      return TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BookingPage(
+                                                detailPage: DetailPage(
+                                                userId: userState.user.id,
+                                                imageUrl: widget.imageUrl,
+                                                name: widget.name,
+                                                spesialis: widget.spesialis,
+                                                price: widget.price,
+                                                rating: widget.rating,
+                                              )),
+                                            ),
+                                          );
+                                        },
+                                        style: TextButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          backgroundColor: kBlueColor,
+                                        ),
+                                        child: Text(
+                                          'Lanjut Pemesanan',
+                                          style: whiteTextStyle.copyWith(
+                                            fontSize: 16,
+                                            fontWeight: semiBold,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return SpinKitFadingCircle(
+                                        color: kBlueColor,
+                                        size: 50,
+                                      );
+                                    }
                                   },
-                                  style: TextButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    backgroundColor: kBlueColor,
-                                  ),
-                                  child: Text(
-                                    'Lanjut Pemesanan',
-                                    style: whiteTextStyle.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: semiBold,
-                                    ),
-                                  ),
                                 ),
                               ),
                             )

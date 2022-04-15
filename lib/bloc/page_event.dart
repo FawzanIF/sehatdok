@@ -76,6 +76,20 @@ class GoToSearchPage extends PageEvent {
   List<Object> get props => [];
 }
 
+class GoToSuccessPage extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class GoToTicketPage extends PageEvent {
+  final User user;
+
+  GoToTicketPage(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+
 class GoToEditProfilePage extends PageEvent {
   final User user;
 
